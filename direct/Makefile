@@ -1,4 +1,4 @@
-ROOT = $(HOME)/Desktop/directCacheSimProject
+ROOT = $(HOME)/Desktop/cacheSimProject/direct
 
 CPPFLAGS := \
 	-I/usr/include
