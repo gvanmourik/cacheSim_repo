@@ -1,0 +1,48 @@
+Direct Mapping Simulation Results:
+          Cache Size(KiB) = 4
+		      Hits = 729457
+	            Misses = 378025
+	    Hit/Miss Ratio = 1.9297
+
+Direct Mapping Simulation Results:
+          Cache Size(KiB) = 16
+		      Hits = 946465
+	            Misses = 161017
+	    Hit/Miss Ratio = 5.878
+
+Direct Mapping Simulation Results:
+          Cache Size(KiB) = 64
+		      Hits = 1058948
+	            Misses = 48534
+	    Hit/Miss Ratio = 21.819
+
+Direct Mapping Simulation Results:
+          Cache Size(KiB) = 256
+		      Hits = 1085725
+	            Misses = 21757
+	    Hit/Miss Ratio = 49.902
+
+Direct Mapping Simulation Results:
+          Cache Size(KiB) = 1024
+		      Hits = 1093035
+	            Misses = 14447
+	    Hit/Miss Ratio = 75.658
+
+Direct Mapping Simulation Results:
+          Cache Size(KiB) = 4096
+		      Hits = 1093559
+	            Misses = 13923
+	    Hit/Miss Ratio = 78.543
+
+Direct Mapping Simulation Results:
+          Cache Size(KiB) = 16384
+		      Hits = 1093585
+	            Misses = 13897
+	    Hit/Miss Ratio = 78.692
+
+Direct Mapping Simulation Results:
+          Cache Size(KiB) = 65536
+		      Hits = 1093613
+	            Misses = 13869
+	    Hit/Miss Ratio = 78.853
+
