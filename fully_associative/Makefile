@@ -7,12 +7,12 @@ CFLAGS := \
 	-std=c++14 \
 	-stdlib=libc++
 	
-TARGET = $(ROOT)/fullyAssCacheSim
+TARGET = $(ROOT)/fullyAssociativeCacheSim
 
 
 all: $(TARGET)
 
-SOURCE = $(ROOT)/src/fullyAssCacheSim.cpp
+SOURCE = $(ROOT)/src/fullyAssociativeCacheSim.cpp
 OBJECT = $(SOURCE:.cpp=.o)
 BUILD = $(TARGET) $(OBJECT)
 
