@@ -12,7 +12,7 @@
 
 
 const std::string TRACE_FILE = "EATraceDDOT.out";
-const std::string FULLY_OUTPUT_FILE = "SetAssociativeSimLog.txt";
+const std::string SET_OUTPUT_FILE = "SetAssociativeSimLog.txt";
 unsigned int HIT_COUNT;
 unsigned int MISS_COUNT;
 unsigned int CACHE_MAX_LINES;
@@ -27,15 +27,15 @@ void printVector(std::vector<intptr_t> &);
 int findFileLength();
 
 // Initialization
-void initSimData();
+void initSimData(int &setLevel);
 
 // Simulation
-void setAssociativeSim(std::vector<intptr_t> &data, std::vector< std::unordered_map<intptr_t, int> > &cache);
+void setAssociativeSim(std::vector<intptr_t> &data, std::vector< std::unordered_map<intptr_t, int> > &cache, int number_of_sets);
 bool FOUND_IN_SET(intptr_t targetAddress, std::unordered_map<intptr_t, int> set);
 bool SET_IS_FULL(std::queue<intptr_t> fifo_tracker);
 void replaceSetData(intptr_t newAddress, std::unordered_map<intptr_t, int> &set, std::queue<intptr_t> &FIFO);
 void insertSetData(intptr_t newAddress, std::unordered_map<intptr_t, int> &set, std::queue<intptr_t> &FIFO);
-void setAssociativeSimResults(std::ofstream &fout, unsigned int cacheLineSize, double timeForSim, unsigned int numOfDataAddresses);
+void setAssociativeSimResults(std::ofstream &fout, unsigned int cacheLineSize, double timeForSim, unsigned int numOfDataAddresses, int setLevel);
 void simMenu(std::vector<intptr_t> &addressData);
 bool clearFile(std::ofstream &target, std::string fName);
 
@@ -53,7 +53,7 @@ int main (int argc, char *argv[])
         //      printVector(traceData);
 
         // Start simulation
-        //simMenu(traceData);
+        simMenu(traceData);
 
 
         return 0;
@@ -123,7 +123,7 @@ int findFileLength()
 
 
 // INITIALIZATION
-void initSimData()
+void initSimData(int &setLevel)
 {
         // Variables
         int words_per_line = 1;
@@ -132,6 +132,9 @@ void initSimData()
 
         std::cout << "Input cache size (in bytes): ";
         std::cin >> cache_size;
+	std::cout << "Input set level {2, 4, 8, 16}: ";
+	std::cin >> setLevel;
+
         CACHE_MAX_LINES = cache_size / line_size;
 }
 
@@ -140,12 +143,13 @@ void initSimData()
 void setAssociativeSim(std::vector<intptr_t> &data, std::vector< std::unordered_map<intptr_t, int> > &cache, int number_of_sets)
 {
 	std::cout << "Simulation running..." << std::endl;
-	std::vector< std::queue<intptr_t> FIFO(number_of_sets); //Collection of FIFO trackers for each set
+	std::vector< std::queue<intptr_t> > FIFO(number_of_sets); //Collection of FIFO trackers for each set
+	
 	for (int i = 0; i < data.size(); i++)
 	{
 		// Determine set
 		int set_index = data[i] % number_of_sets;
-
+		
 		// Report hit or miss and add data to cache
 		if ( FOUND_IN_SET(data[i], cache[set_index]) )
 		{
@@ -209,7 +213,7 @@ void insertSetData(intptr_t newAddress, std::unordered_map<intptr_t, int> &set, 
 }
 
 
-void setAssociativeSimResults(std::ofstream &fout, unsigned int cacheLineSize, double timeForSim, unsigned int numOfDataAddresses)
+void setAssociativeSimResults(std::ofstream &fout, unsigned int cacheLineSize, double timeForSim, unsigned int numOfDataAddresses, int setLevel)
 {
 	// Calculations
         float ratio = (float)HIT_COUNT / (float)MISS_COUNT;
@@ -218,6 +222,7 @@ void setAssociativeSimResults(std::ofstream &fout, unsigned int cacheLineSize, d
         // Results
         fout << "Fully Associative Mapping Simulation Results:" << std::endl;
         fout << "          Cache Size(KiB) = " << cacheSizeKiB << std::endl;
+	fout << "	         Set Level = " << setLevel << std::endl;
         fout << "                     Hits = " << HIT_COUNT << std::endl;
         fout << "                   Misses = " << MISS_COUNT << std::endl;
         fout << "           Hit/Miss Ratio = " << std::setprecision(5) << ratio << std::endl;
@@ -226,6 +231,71 @@ void setAssociativeSimResults(std::ofstream &fout, unsigned int cacheLineSize, d
 }
 
 
+void simMenu(std::vector<intptr_t> &addressData)
+{
+	std::ofstream setAssociativeLog;
+        clearFile(setAssociativeLog, SET_OUTPUT_FILE);
+        setAssociativeLog.open(SET_OUTPUT_FILE, std::ofstream::out | std::ofstream::app);
+
+        if (setAssociativeLog.is_open())
+        {
+                int choice;
+                do
+                {
+                        // Display
+                        std::cout << "Select one of the options below:" << std::endl;
+                        std::cout << "1) Begin Set Associative Mapping Cache Simulation" << std::endl;
+                        std::cout << "2) EXIT and Print Results to " << SET_OUTPUT_FILE << std::endl;
+                        std::cout << "Enter an option: ";
+                        std::cin >> choice;
+
+                        if (choice == 1)
+                        {
+                                // Gather user data for cache 
+                                int set_levels; //Should be 2, 4, 8, or 16
+				intptr_t cache_lines;
+				initSimData(set_levels);
+				
+				std::vector< std::unordered_map<intptr_t, int> > cache(set_levels);
+
+                                // Run simulation
+                                HIT_COUNT = 0;
+                                MISS_COUNT = 0;
+
+                                std::clock_t begin = clock();
+                                setAssociativeSim(addressData, cache, set_levels);
+                                std::clock_t end = clock();
+                                double seconds = double(end - begin) / CLOCKS_PER_SEC;
+
+                                setAssociativeSimResults(setAssociativeLog, CACHE_MAX_LINES, seconds, addressData.size(), set_levels);
+                        }
+                        else if (choice == 2)
+                        {
+                                std::cout << "Closing simulation program..." << std::endl;
+                        }
+                        else
+                        {
+                                std::cout << "__Invalid option...try again__" << std::endl;
+                        }
+                } 
+		while (choice != 2);
+
+                setAssociativeLog.close();
+        }
+	else
+	{
+        	        std::cout << "Error: Unable to open " << SET_OUTPUT_FILE << std::endl;
+ 	}
+}
 
 
-
+bool clearFile(std::ofstream &srcFile, std::string fName)
+{
+        srcFile.open(fName, std::ofstream::out | std::ofstream::trunc);
+        if (srcFile.is_open())
+        {
+                srcFile.close();
+                return true;
+        }
+        return false;
+}
