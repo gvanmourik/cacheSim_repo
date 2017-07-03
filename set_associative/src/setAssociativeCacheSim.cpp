@@ -15,7 +15,8 @@ const std::string TRACE_FILE = "EATraceDDOT.out";
 const std::string SET_OUTPUT_FILE = "SetAssociativeSimLog.txt";
 unsigned int HIT_COUNT;
 unsigned int MISS_COUNT;
-unsigned int CACHE_MAX_LINES;
+unsigned int SET_MAX_LINES;
+unsigned int CACHE_LINES;
 
 
 /********************************/
@@ -135,7 +136,8 @@ void initSimData(int &setLevel)
 	std::cout << "Input set level {2, 4, 8, 16}: ";
 	std::cin >> setLevel;
 
-        CACHE_MAX_LINES = cache_size / line_size;
+        CACHE_LINES = cache_size / line_size;
+	SET_MAX_LINES = CACHE_LINES / setLevel;
 }
 
 
@@ -183,7 +185,7 @@ bool FOUND_IN_SET(intptr_t targetAddress, std::unordered_map<intptr_t, int> set)
 
 bool SET_IS_FULL(std::queue<intptr_t> fifo_tracker)
 {
-	if (fifo_tracker.size() < CACHE_MAX_LINES)
+	if (fifo_tracker.size() < SET_MAX_LINES)
 	{
 		return false;
 	}
@@ -220,7 +222,7 @@ void setAssociativeSimResults(std::ofstream &fout, unsigned int cacheLineSize, d
         unsigned int cacheSizeKiB = (cacheLineSize*8) / 1024;
 
         // Results
-        fout << "Fully Associative Mapping Simulation Results:" << std::endl;
+        fout << "Set Associative Mapping Simulation Results:" << std::endl;
         fout << "          Cache Size(KiB) = " << cacheSizeKiB << std::endl;
 	fout << "	         Set Level = " << setLevel << std::endl;
         fout << "                     Hits = " << HIT_COUNT << std::endl;
@@ -267,7 +269,7 @@ void simMenu(std::vector<intptr_t> &addressData)
                                 std::clock_t end = clock();
                                 double seconds = double(end - begin) / CLOCKS_PER_SEC;
 
-                                setAssociativeSimResults(setAssociativeLog, CACHE_MAX_LINES, seconds, addressData.size(), set_levels);
+                                setAssociativeSimResults(setAssociativeLog, CACHE_LINES, seconds, addressData.size(), set_levels);
                         }
                         else if (choice == 2)
                         {

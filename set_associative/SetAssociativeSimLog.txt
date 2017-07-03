@@ -1,18 +1,108 @@
 Fully Associative Mapping Simulation Results:
           Cache Size(KiB) = 4
 	         Set Level = 2
-                     Hits = 947795
-                   Misses = 159687
-           Hit/Miss Ratio = 5.9353
+                     Hits = 790413
+                   Misses = 317069
+           Hit/Miss Ratio = 2.4929
  Number of Data Addresses = 1107482
-       Time of Simulation = 2.6345 minutes
+       Time of Simulation = 1.3332 minutes
+
+Fully Associative Mapping Simulation Results:
+          Cache Size(KiB) = 4
+	         Set Level = 4
+                     Hits = 791203
+                   Misses = 316279
+           Hit/Miss Ratio = 2.5016
+ Number of Data Addresses = 1107482
+       Time of Simulation = 0.66168 minutes
+
+Fully Associative Mapping Simulation Results:
+          Cache Size(KiB) = 4
+	         Set Level = 8
+                     Hits = 791100
+                   Misses = 316382
+           Hit/Miss Ratio = 2.5005
+ Number of Data Addresses = 1107482
+       Time of Simulation = 0.34156 minutes
+
+Fully Associative Mapping Simulation Results:
+          Cache Size(KiB) = 4
+	         Set Level = 16
+                     Hits = 791490
+                   Misses = 315992
+           Hit/Miss Ratio = 2.5048
+ Number of Data Addresses = 1107482
+       Time of Simulation = 0.17851 minutes
 
 Fully Associative Mapping Simulation Results:
           Cache Size(KiB) = 16
 	         Set Level = 2
-                     Hits = 1089985
-                   Misses = 17497
-           Hit/Miss Ratio = 62.296
+                     Hits = 1086448
+                   Misses = 21034
+           Hit/Miss Ratio = 51.652
  Number of Data Addresses = 1107482
-       Time of Simulation = 9.0739 minutes
+       Time of Simulation = 5.1843 minutes
+
+Fully Associative Mapping Simulation Results:
+          Cache Size(KiB) = 16
+	         Set Level = 4
+                     Hits = 1086383
+                   Misses = 21099
+           Hit/Miss Ratio = 51.49
+ Number of Data Addresses = 1107482
+       Time of Simulation = 2.8359 minutes
+
+Fully Associative Mapping Simulation Results:
+          Cache Size(KiB) = 16
+	         Set Level = 8
+                     Hits = 1086177
+                   Misses = 21305
+           Hit/Miss Ratio = 50.982
+ Number of Data Addresses = 1107482
+       Time of Simulation = 1.2834 minutes
+
+Fully Associative Mapping Simulation Results:
+          Cache Size(KiB) = 16
+	         Set Level = 16
+                     Hits = 1086232
+                   Misses = 21250
+           Hit/Miss Ratio = 51.117
+ Number of Data Addresses = 1107482
+       Time of Simulation = 0.63454 minutes
+
+Fully Associative Mapping Simulation Results:
+          Cache Size(KiB) = 64
+	         Set Level = 2
+                     Hits = 1092547
+                   Misses = 14935
+           Hit/Miss Ratio = 73.153
+ Number of Data Addresses = 1107482
+       Time of Simulation = 13.686 minutes
+
+Fully Associative Mapping Simulation Results:
+          Cache Size(KiB) = 64
+	         Set Level = 4
+                     Hits = 1092550
+                   Misses = 14932
+           Hit/Miss Ratio = 73.168
+ Number of Data Addresses = 1107482
+       Time of Simulation = 6.8225 minutes
+
+Fully Associative Mapping Simulation Results:
+          Cache Size(KiB) = 64
+	         Set Level = 8
+                     Hits = 1092549
+                   Misses = 14933
+           Hit/Miss Ratio = 73.163
+ Number of Data Addresses = 1107482
+       Time of Simulation = 3.4266 minutes
+
+Fully Associative Mapping Simulation Results:
+          Cache Size(KiB) = 64
+	         Set Level = 16
+                     Hits = 1092561
+                   Misses = 14921
+           Hit/Miss Ratio = 73.223
+ Number of Data Addresses = 1107482
+       Time of Simulation = 1.7226 minutes
 
